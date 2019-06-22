@@ -1496,8 +1496,9 @@ HandlerResponse WSRequestHandler::HandleTakeSourceScreenshot(WSRequestHandler* r
 
 
 void enumFilters(obs_source_t* parent, obs_source_t* child, void* param) {
-	const char* name = obs_source_get_id(child);
-	if (strcmp(name, "gdq_crop_console_filter") == 0) {
+	const char* id = obs_source_get_id(child);
+
+	if (strcmp(id, "gdq_crop_console_filter") == 0) {
 		obs_data_t* filtersettings = obs_source_get_settings(child);
 		obs_data_set_string(filtersettings, "console", "None");
 		obs_data_set_int(filtersettings, "left", 0);
@@ -1528,5 +1529,16 @@ bool enumSources(void* param, obs_source_t* source) {
 */
 HandlerResponse WSRequestHandler::HandleResetCropping(WSRequestHandler *req) {
 	obs_enum_sources(enumSources, NULL);
+
+	struct obs_frontend_source_list scenes = { 0 };
+	obs_frontend_get_scenes(&scenes);
+
+	for (size_t i = 0; i < scenes.sources.num; i++) {
+		obs_source_t* source = scenes.sources.array[i];
+		obs_source_enum_filters(source, enumFilters, NULL);
+	}
+
+	obs_frontend_source_list_free(&scenes);
+
 	return req->SendOKResponse();
 }
