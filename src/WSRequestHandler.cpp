@@ -125,7 +125,9 @@ QHash<QString, HandlerResponse(*)(WSRequestHandler*)> WSRequestHandler::messageM
 	{ "GetTextFreetype2Properties", WSRequestHandler::HandleGetTextFreetype2Properties },
 
 	{ "GetBrowserSourceProperties", WSRequestHandler::HandleGetBrowserSourceProperties },
-	{ "SetBrowserSourceProperties", WSRequestHandler::HandleSetBrowserSourceProperties }
+	{ "SetBrowserSourceProperties", WSRequestHandler::HandleSetBrowserSourceProperties },
+
+	{ "ResetCropping", WSRequestHandler::HandleResetCropping },
 };
 
 QSet<QString> WSRequestHandler::authNotRequired {

@@ -160,4 +160,6 @@ class WSRequestHandler : public QObject {
 
 		static HandlerResponse HandleSetBrowserSourceProperties(WSRequestHandler* req);
 		static HandlerResponse HandleGetBrowserSourceProperties(WSRequestHandler* req);
+
+		static HandlerResponse HandleResetCropping(WSRequestHandler *req);
 };
